@@ -1,5 +1,5 @@
 # JSDB
-## Remake of the [JSDB](http://wwww.jesolosandonabasket.it) site using modern web technologies
+## Remake of the [JSDB](http://www.jesolosandonabasket.it/) site using modern web technologies
 
 ### Full Stack
 
