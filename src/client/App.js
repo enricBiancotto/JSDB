@@ -9,21 +9,57 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 
 const styles = {
   list: {
-    width: 250,
+    width: 260,
   },
   root: {
     flexGrow: 1,
   },
+};
+
+const sections = {
+  list: [
+    {
+      id: 1,
+      title: 'Home',
+      svg: HomeIcon
+    },
+    {
+      id: 2,
+      title: 'Squadra',
+      svg: TeamIcon
+    },
+    {
+      id: 3,
+      title: 'Calendario',
+      svg: CalendarIcon
+    },
+    {
+      id: 4,
+      title: 'Galleria',
+      svg: GalleryIcon
+    },
+    {
+      id: 5,
+      title: 'Dove siamo',
+      svg: MapsIcon
+    },
+    {
+      id: 6,
+      title: 'Sponsor',
+      svg: SponsorIcon
+    }]
 };
 
 function HomeIcon(props) {
@@ -65,65 +101,48 @@ function TeamIcon(props) {
     </SvgIcon>
   );
 }
+function SponsorIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      <path fill="#000000" d="M12,6A3,3 0 0,0 9,9A3,3 0 0,0 12,12A3,3 0 0,0 15,9A3,3 0 0,0 12,6M6,8.17A2.5,2.5 0 0,0 3.5,10.67A2.5,2.5 0 0,0 6,13.17C6.88,13.17 7.65,12.71 8.09,12.03C7.42,11.18 7,10.15 7,9C7,8.8 7,8.6 7.04,8.4C6.72,8.25 6.37,8.17 6,8.17M18,8.17C17.63,8.17 17.28,8.25 16.96,8.4C17,8.6 17,8.8 17,9C17,10.15 16.58,11.18 15.91,12.03C16.35,12.71 17.12,13.17 18,13.17A2.5,2.5 0 0,0 20.5,10.67A2.5,2.5 0 0,0 18,8.17M12,14C10,14 6,15 6,17V19H18V17C18,15 14,14 12,14M4.67,14.97C3,15.26 1,16.04 1,17.33V19H4V17C4,16.22 4.29,15.53 4.67,14.97M19.33,14.97C19.71,15.53 20,16.22 20,17V19H23V17.33C23,16.04 21,15.26 19.33,14.97Z" />
+    </SvgIcon>
+  );
+}
 
+function SearchIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      <path fill="#000000" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+    </SvgIcon>
+  );
+}
 class App extends React.Component {
   state = {
     left: false,
   };
 
-  toggleDrawer = (side, open) => () => {
+  toggleDrawer = open => () => {
     this.setState({
-      [side]: open,
+      left: open,
     });
   };
 
   render() {
     const { classes } = this.props;
 
-    const sideList = (
+    const drawerList = (
       <div className={classes.list}>
         <List>
-          <ListItem>
-            <Button>
-              <Avatar>
-                <HomeIcon />
-              </Avatar>
-              <ListItemText primary="Home" />
-            </Button>
-          </ListItem>
-          <ListItem>
-            <Button>
-              <Avatar>
-                <GalleryIcon />
-              </Avatar>
-              <ListItemText primary="Gallery" />
-            </Button>
-          </ListItem>
-          <ListItem>
-            <Button>
-              <Avatar>
-                <CalendarIcon />
-              </Avatar>
-              <ListItemText primary="Calendar" />
-            </Button>
-          </ListItem>
-          <ListItem>
-            <Button>
-              <Avatar>
-                <MapsIcon />
-              </Avatar>
-              <ListItemText primary="Where" />
-            </Button>
-          </ListItem>
-          <ListItem>
-            <Button>
-              <Avatar>
-                <TeamIcon />
-              </Avatar>
-              <ListItemText primary="Team" />
-            </Button>
-          </ListItem>
+          {sections.list.map(item => (
+            <ListItem button key={item.id}>
+              <ListItemIcon>
+                <item.svg />
+              </ListItemIcon>
+              <ListItemText primary={item.title} />
+            </ListItem>
+          ))}
         </List>
+        <Divider />
       </div>
     );
 
@@ -132,10 +151,10 @@ class App extends React.Component {
         <div className={classes.root}>
           <AppBar position="fixed" color="default">
             <Toolbar>
-              <IconButton className="root" onClick={this.toggleDrawer('left', true)}>
+              <IconButton className="root" onClick={this.toggleDrawer(true)}>
                 <MenuIcon />
               </IconButton>
-              <Typography variant="title" color="inherit">
+              <Typography variant="title" color="inherit" align="right">
                 Home
               </Typography>
             </Toolbar>
@@ -143,16 +162,14 @@ class App extends React.Component {
         </div>
         <SwipeableDrawer
           open={this.state.left}
-          onClose={this.toggleDrawer('left', false)}
-          onOpen={this.toggleDrawer('left', true)}
+          onClose={this.toggleDrawer(false)}
+          onOpen={this.toggleDrawer(true)}
         >
           <div
-            tabIndex={0}
             role="button"
-            onClick={this.toggleDrawer('left', false)}
-            onKeyDown={this.toggleDrawer('left', false)}
+            onClick={this.toggleDrawer(false)}
           >
-            {sideList}
+            {drawerList}
           </div>
         </SwipeableDrawer>
       </div>
