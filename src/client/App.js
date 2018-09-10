@@ -59,7 +59,11 @@ const sections = {
       id: 6,
       title: 'Sponsor',
       svg: SponsorIcon
-    }]
+    },
+	{
+	  id: 7,
+	  title: 'Articoli'
+	}]
 };
 
 function HomeIcon(props) {
