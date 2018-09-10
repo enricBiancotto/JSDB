@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, NavLink, HashRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -76,7 +77,7 @@ const sections = {
     },
     {
       id: 5,
-      title: 'Dove siamo',
+      title: 'Chi siamo',
       svg: MapsIcon
     },
     {
@@ -148,6 +149,7 @@ class AppbarDrawer extends React.Component {
     const drawer = (
       <div>
         <div className={classes.toolbar} />
+
         <List>
           {sections.list.map(item => (
             <ListItem divider button key={item.id}>
@@ -162,52 +164,54 @@ class AppbarDrawer extends React.Component {
     );
 
     return (
-      <div className={classes.root}>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleDrawerToggle}
-              className={classes.navIconHide}
+      <HashRouter>
+        <div className={classes.root}>
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="Open drawer"
+                onClick={this.handleDrawerToggle}
+                className={classes.navIconHide}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="title" color="inherit" noWrap>
+                Home
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Hidden mdUp>
+            <SwipeableDrawer
+              variant="temporary"
+              anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+              open={this.state.mobileOpen}
+              onClose={this.handleDrawerToggle}
+              onOpen={this.handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
             >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="title" color="inherit" noWrap>
-              Home
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Hidden mdUp>
-          <SwipeableDrawer
-            variant="temporary"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={this.state.mobileOpen}
-            onClose={this.handleDrawerToggle}
-            onOpen={this.handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </SwipeableDrawer>
-        </Hidden>
-        <Hidden smDown implementation="css">
-          <SwipeableDrawer
-            variant="permanent"
-            open
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-          >
-            {drawer}
-          </SwipeableDrawer>
-        </Hidden>
-        <main className={classes.content} />
-      </div>
+              {drawer}
+            </SwipeableDrawer>
+          </Hidden>
+          <Hidden smDown implementation="css">
+            <SwipeableDrawer
+              variant="permanent"
+              open
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+            >
+              {drawer}
+            </SwipeableDrawer>
+          </Hidden>
+          <main className={classes.content} />
+        </div>
+      </HashRouter>
     );
   }
 }
